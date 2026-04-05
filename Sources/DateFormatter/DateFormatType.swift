@@ -12,6 +12,12 @@ public nonisolated protocol DateFormatTypeProtocol: Equatable, Sendable {
     var cacheKey: String { get }
 }
 
+public nonisolated extension DateFormatTypeProtocol {
+    var cacheKey: String {
+        "\(String(reflecting: type(of: self)))|\(formatString)"
+    }
+}
+
 // MARK: - DateFormatType
 
 nonisolated enum DateFormatType: DateFormatTypeProtocol {
@@ -52,14 +58,4 @@ nonisolated enum DateFormatType: DateFormatTypeProtocol {
             customFormat
         }
     }
-
-    // Unique key for the cache
-    var cacheKey: String {
-        "DateFormatter_\(formatString)"
-    }
-//
-//    // Equatable : géré automatiquement par Swift pour les associated values de type Equatable
-//    static func == (lhs: DateFormatType, rhs: DateFormatType) -> Bool {
-//        lhs.formatString == rhs.formatString
-//    }
 }
